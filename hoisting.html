@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Click Example</title>
+</head>
+<body>
+    <button class="btn">Button 1</button>
+    <button class="btn">Button 2</button>
+    <button class="btn">Button 3</button>
+    <button class="btn">Button 4</button>
+    <button class="btn">Button 5</button>
+
+    <div>
+        
+    </div>
+    
+    <script>
+        var buttons = document.querySelectorAll(".btn");
+        for (var i = 0; i < buttons.length; i++) {
+            buttons[i].onclick = function() {
+                console.log("Button clicked!",i);
+            };
+        }
+    </script>
+</body>
+</html>

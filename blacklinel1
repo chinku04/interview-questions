@@ -1,0 +1,110 @@
+Share
+
+
+You said:
+import React, { useState } from 'react';
+import { createRoot } from 'react-dom/client';
+
+
+/*
+type Field = {
+  id: string;
+  value: string;
+};
+*/
+const DynamicForm = () => {
+  const [fields, setFields] = useState([{ id: 1, value: '' }]);
+  const [errors, setErrors] = useState({});
+
+  const handleSubmit =()=>{
+  
+  }
+  const validateFields =(id, value)=>{
+    // find the duplicate
+    console.log(id,value)
+    // ids with duplicate entry
+    let tempFields=fields.find((item,i)=>{
+      if(item.value==value){
+        setErrors({...errors,id})
+      }
+    })
+    
+    // for setting error obj
+  }
+
+
+
+
+
+
+  const addField =()=>{
+    let tempId=fields.length+1
+    setFields([...fields,{ id: tempId, value: '' }])
+  }
+
+
+
+
+
+  const handleChange=(id, value)=>{
+    console.log(id, value);
+    const newFields=[...fields];
+    newFields.filter((item,index)=>{
+      if(item.id===id){
+        item.value=value;
+      }
+    })
+    setFields(newFields);
+    validateFields(id, value);
+  }
+
+  const removeField=(index)=>{
+    console.log("index",index,fields);
+    console.log("fields",fields);
+    const newFields=fields.filter((item,i)=> item.id!==index);
+    setFields(newFields);
+  }
+
+  console.log("errors",errors,fields);
+  return (
+    <form onSubmit={handleSubmit}>
+      {fields.map((field,index) => (
+        <div key={field.id} style={{ marginBottom: '1rem' }}>
+          <input
+            type="text"
+            value={field.value}
+            onChange={(e) => handleChange(field.id, e.target.value)}
+            placeholder="Enter value"
+          />
+          <button type="button" onClick={() => removeField(field.id)}>
+            Remove
+          </button>
+          <div>{errors.id==field.id},:,{errors.id},:,{field.id}</div>
+          
+          {
+          // errors.id==field.id && 
+          (
+            <div style={{ color: 'red' }}>error</div>
+          )}
+        </div>
+      ))}
+
+      
+      <button type="button" onClick={addField}>
+        Add Field
+      </button>
+      <button type="submit" disabled={Object.keys(errors).length > 0}>
+        Submit
+      </button>
+    </form>
+  );
+};
+function App() {
+  return (
+    <DynamicForm/>
+  ); 
+}
+
+const container = document.getElementById('root');
+const root = createRoot(container);
+root.render(<App />);

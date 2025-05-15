@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head></head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+  </head>
+  <body>
+    <div class="todoLength">Total Todos: 0</div>
+    <div class="todoContainer"></div>
+    <button class="loadBtn">Load More</button>
+
+    <script>
+      let todoResult = [];
+      let skip = 0;
+      const limit = 20;
+      const maxTodos = 100;
+
+      const fetchTodos = () => {
+        fetch(`https://dummyjson.com/todos?limit=${limit}&skip=${skip}`)
+          .then(response => response.json())
+          .then(data => {
+            todoResult = todoResult.concat(data.todos); // Append new todos
+            
+            // Update total count
+            document.querySelector('.todoLength').innerText = "Total Todos: " + todoResult.length;
+
+            // Append new todos to the container
+            const myTodoElement = document.querySelector('.todoContainer');
+            data.todos.forEach(item => {
+              const projectEl = document.createElement('div');
+              projectEl.innerText = `${item.todo} - ${item.completed ? 'Completed' : 'Not Completed'}`;
+              debugger
+              myTodoElement.appendChild(projectEl);
+            });
+
+            // Increment `skip` for next batch
+            skip += limit;
+
+            // Hide "Load More" button if 100 todos are loaded
+            if (todoResult.length >= maxTodos) {
+              document.querySelector('.loadBtn').style.display = 'none';
+            }
+          });
+      };
+
+      document.querySelector('.loadBtn').addEventListener("click", fetchTodos);
+
+      // Initial fetch
+      fetchTodos();
+    </script>
+  </body>
+</html>

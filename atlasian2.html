@@ -1,0 +1,72 @@
+/*
+Given an API returning a list of todos, we want to fetch the list, create a separate block for each user, and display
+their todos in the appropriate block.
+
+Use this endpoint URL to get the todos: https://dummyjson.com/todos?limit=10&skip=80. It will return the following
+structure with total of 10 todos:
+{
+"todos": [
+{
+"id": 1,
+"todo": "Do something nice for someone I care about",
+"completed": true,
+"userId": 26
+},
+],
+}
+
+Each block should contain the userId as the title of the block and the list of todos.
+*/
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head></head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Todo List</title>
+</head>
+
+<body>
+  <div id="root">
+    <div id="todo" class="todo"> </div>
+
+    <script>
+      fetch("https://dummyjson.com/todos?limit=10&skip=80")
+        .then((data) => data.json())
+        .then(res => {
+          const groupTodo = res.todos.reduce((acc, todo) => {
+            if (!acc[todo.userId]) {
+              acc[todo.userId] = []
+            }
+            acc[todo.userId].push(todo);
+            return acc
+          }, {})
+          // console.log("groupTodo",groupTodo)
+          const para = document.querySelector(".todo");
+          // console.log("para",para);
+          for (const users in groupTodo) {
+            ;
+            const userBlock = document.createElement("div");
+            userBlock.innerHTML = `<h2> ${users} </h2>`;
+            const ul = document.createElement("ul");
+            for (let i = 0; i < groupTodo[users].length; i++) {
+              const li = document.createElement("li");
+              console.log("groupTodo[users]", groupTodo[users])
+              li.innerText = groupTodo[users][i].todo
+              ul.appendChild(li);
+            }
+            userBlock.appendChild(ul);
+            para.appendChild(userBlock);
+
+          }
+
+          // console.log(res.todos)
+          // console.log("groupTodo",groupTodo)
+
+
+        });
+    </script>
+</body>
+
+</html>

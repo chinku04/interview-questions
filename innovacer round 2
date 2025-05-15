@@ -1,0 +1,109 @@
+
+
+function fnDoMath(initialValue){
+  let computedValue=initialValue;
+
+   const methods= {
+      add(num){
+        computedValue+=num;
+        return methods;
+      },
+      subtract(num){
+        computedValue-=num;
+        return methods;
+      },
+      multiply(num){
+        computedValue*=num;
+        return methods;
+      },
+      result(){
+        return computedValue;
+      }
+    }
+    return methods;
+}
+//example
+let result2 = fnDoMath(1).result();
+console.log("fnDoMath",fnDoMath());
+console.log("result2-->",result2)
+// result2 = 1
+let result3 = fnDoMath(1).add(5).multiply(2).result();
+console.log("result3-->",result3)
+// result3 = 12
+let result = fnDoMath(1).add(5).multiply(2).subtract(3).result();
+
+console.log("result->",result);
+// result = 9
+
+
+var a = `
+mark Johansson waffle 80 2
+mark Johansson blender 200 1
+mark Johansson knife 10 4
+Nikita Smith chips 45 3
+Nikita Smith biscuit 50 4
+John Doe chips 45 3
+John Doe biscuit 50 4
+John Doe chips 45 3
+`;
+// assuming writing inside a function
+function parsePurchasedata(inputString) {
+  const lines = a.trim().split("\n");
+  const result = {};
+
+  for (const line of lines) {
+    const parts = line.trim().split(" ");
+    const fullName = parts[0] + " " + parts[1];
+    const name = parts[2];
+    const price = parts[3];
+    const quantity = parts[4];
+
+    if (!result[fullName]) {
+      result[fullName] = [];
+    }
+    result[fullName].push({
+      name,
+      price,
+      quantity,
+    });
+  }
+}
+
+console.log(result);
+
+// {
+//   "mark Johansson": [
+//     {
+//       "name": "waffle",
+//       "price": "80",
+//       "quantity": "2"
+//     },
+//     {
+//       "name": "blender",
+//       "price": "200",
+//       "quantity": "1"
+//     },
+//     {
+//       "name": "knife",
+//       "price": "10",
+//       "quantity": "4"
+//     }
+//   ],
+//     "Nikita Smith": [
+//       {
+//         "name": "waffle",
+//         "price": "80",
+//         "quantity": "2"
+//       },
+//       {
+//         "name": "blender",
+//         "price": "200",
+//         "quantity": "1"
+//       },
+//       {
+//         "name": "knife",
+//         "price": "10",
+//         "quantity": "4"
+//       }
+//     ]
+// }
